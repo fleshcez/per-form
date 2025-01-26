@@ -1,0 +1,9 @@
+<label>{{label}}</label>
+<input
+    *ngIf="control.show()"
+    type="text"
+    [value]="inputValue()"
+    [disabled]="control.isDisabled()"
+    [readonly]="control.isReadonly()"
+    (input)="onChange($event)"
+/>

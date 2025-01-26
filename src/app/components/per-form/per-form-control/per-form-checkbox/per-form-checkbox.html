@@ -1,0 +1,8 @@
+<label>{{label}}</label>
+<input
+    *ngIf="control.show()"
+    type="checkbox"
+    [disabled]="control.isDisabled()"
+    [checked]="control.value() ? control.value() : ''"
+    (change)="onChange($event)"
+/>

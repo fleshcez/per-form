@@ -1,0 +1,16 @@
+<div>
+    <per-form [data]="data">
+        <ng-container slot="projected">
+            <per-form-checkbox
+                [label]="'Show text'"
+                [options]="checkboxControlOptions"
+            >
+            </per-form-checkbox>
+            <per-form-text [options]="textControlOptions"></per-form-text>
+            <per-form-checkbox
+                [label]="'Disable text'"
+                [options]="checkboxDisabledControlOptions"
+            ></per-form-checkbox>
+        </ng-container>
+    </per-form>
+</div>
