@@ -1,13 +1,4 @@
-import {
-    Component,
-    computed,
-    inject,
-    Injector,
-    Input,
-    runInInjectionContext,
-    signal,
-    Signal,
-} from "@angular/core";
+import { Component, computed, Input, signal, Signal } from "@angular/core";
 import { PerFormControlSignal } from "../per-form-control-signal";
 import { IPerFormControlOptions } from "../per-form-control.interace";
 
@@ -22,10 +13,7 @@ export class PerFormText {
     public label: string | undefined;
     @Input()
     public options!: IPerFormControlOptions;
-    // @Input()
-    // public control: PerFormControlSignal | undefined;
     public inputValue: Signal<string> = signal("");
-    private _injector = inject(Injector);
     public constructor(public control: PerFormControlSignal) {}
 
     ngOnChanges() {
@@ -35,15 +23,13 @@ export class PerFormText {
 
         this.control.setup(this.options);
 
-        runInInjectionContext(this._injector, () => {
-            this.inputValue = computed(() => {
-                const val = this.control!.value();
-                if (val === undefined) {
-                    return "";
-                } else {
-                    return val as string;
-                }
-            });
+        this.inputValue = computed(() => {
+            const val = this.control!.value();
+            if (val === undefined) {
+                return "";
+            } else {
+                return val as string;
+            }
         });
     }
 
