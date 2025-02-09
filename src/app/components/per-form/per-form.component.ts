@@ -4,6 +4,7 @@ import {
     Input,
     Optional,
     SimpleChange,
+    SimpleChanges,
     SkipSelf,
 } from "@angular/core";
 import { SignalPerFormService } from "./per-form-service/signal-per-form-service";
@@ -39,8 +40,8 @@ export class PerFormComponent {
 
     constructor(private perFormService: PerFormService<DataChangeType>) {}
 
-    ngOnChanges(changes: SimpleChange) {
-        if (changes.currentValue.data) {
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes["data"].currentValue) {
             this.perFormService.dataChanged(this.data);
         }
     }
