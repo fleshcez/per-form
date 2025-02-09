@@ -8,7 +8,8 @@ import {
 
 @Component({
     selector: "per-form-checkbox",
-    templateUrl: "./per-form-checkbox.html",
+    templateUrl: "./per-form-checkbox.component.html",
+    styleUrls: ["./per-form-checkbox.component.scss"],
     standalone: false,
 })
 export class PerFormCheckbox {

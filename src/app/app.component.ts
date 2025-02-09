@@ -36,13 +36,16 @@ export class AppComponent {
     public data = {
         name: "John Doe",
         email: "john.doe@mail.com",
+        showName: true,
     };
 
     public checkboxControlOptions: IPerFormControlOptions = {
+        id: "showName",
         valueBinding: "showName",
     };
 
     public textControlOptions: IPerFormControlOptions = {
+        id: "client.name",
         valueBinding: "client.name",
         show: {
             isDynamic: true,
@@ -60,6 +63,7 @@ export class AppComponent {
     };
 
     public checkboxDisabledControlOptions: IPerFormControlOptions = {
+        id: "isReadonly",
         valueBinding: "isReadonly",
     };
 }

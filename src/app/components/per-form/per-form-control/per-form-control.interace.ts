@@ -19,6 +19,8 @@ export interface IAccessModePerformControl {
 }
 
 export interface IPerFormControlOptions {
+    // can be the same as the binding, but must be unique
+    id: string;
     // property on form model where value is stored and retrieved from
     valueBinding: string;
     show?: IShowPerformControl;
