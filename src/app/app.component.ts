@@ -2,6 +2,7 @@ import { Component, Signal } from "@angular/core";
 import { PerFormModule } from "./components/per-form/per-form.module";
 import { SignalPerFormService } from "./components/per-form/per-form-service/signal-per-form-service";
 import {
+    DataChangeEventType,
     DataChangeType,
     PerFormService,
 } from "./components/per-form/per-form-service/per-form-service";
@@ -34,9 +35,11 @@ import {
 export class AppComponent {
     title = "per-form";
     public data = {
-        name: "John Doe",
         email: "john.doe@mail.com",
         showName: true,
+        client: {
+            name: "John Doe",
+        },
     };
 
     public checkboxControlOptions: IPerFormControlOptions = {

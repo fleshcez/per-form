@@ -1,6 +1,7 @@
 import { FormControl } from "@angular/forms";
 import { set } from "lodash";
 import {
+    DataChangeEventType,
     DataChangeType,
     PerFormService,
 } from "../per-form-service/per-form-service";
@@ -11,9 +12,10 @@ export class PerFormControlBase {
     protected cachedAccessMode: boolean | undefined = undefined;
 
     public evaluteShowExpression(
-        data: Record<string, unknown>,
+        dataEvent: DataChangeEventType,
         options: IPerFormControlOptions,
     ) {
+        const data = dataEvent.data;
         if (!options.show?.isDynamic) {
             if (this.cachedShow === undefined) {
                 this.cachedShow = options.show!.expression.bind(data)();
@@ -25,9 +27,10 @@ export class PerFormControlBase {
     }
 
     public evaluteAccessExpression(
-        data: Record<string, unknown>,
+        dataEvent: DataChangeEventType,
         options: IPerFormControlOptions,
     ) {
+        const data = dataEvent.data;
         if (!options.accessMode?.isDynamic) {
             if (this.cachedAccessMode === undefined) {
                 this.cachedAccessMode =
@@ -48,6 +51,9 @@ export class PerFormControlBase {
     ) {
         formControl.setValue(value);
         set(data, options.valueBinding, value);
-        perFormService.dataChanged({ ...data });
+        perFormService.updateData({
+            data: { ...data },
+            emitter: { id: options.id },
+        });
     }
 }

@@ -3,7 +3,6 @@ import {
     Component,
     Input,
     Optional,
-    SimpleChange,
     SimpleChanges,
     SkipSelf,
 } from "@angular/core";
@@ -42,7 +41,7 @@ export class PerFormComponent {
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes["data"].currentValue) {
-            this.perFormService.dataChanged(this.data);
+            this.perFormService.updateData({ data: this.data });
         }
     }
 }

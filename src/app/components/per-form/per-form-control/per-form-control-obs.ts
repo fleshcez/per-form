@@ -1,6 +1,7 @@
 import { FormControl } from "@angular/forms";
 import { set, get } from "lodash";
 import {
+    DataChangeEventType,
     DataChangeType,
     PerFormService,
 } from "../per-form-service/per-form-service";
@@ -21,7 +22,7 @@ export class PerFormControlObs extends PerFormControlBase {
     constructor(
         public formControl: FormControl,
         private _options: IPerFormControlOptions,
-        private _data: Record<string, unknown>,
+        private _data: DataChangeEventType,
         private _perFormService: PerFormService<DataChangeType>,
     ) {
         super();
@@ -35,9 +36,12 @@ export class PerFormControlObs extends PerFormControlBase {
             this._options.accessMode !== undefined &&
             this._options.accessMode.mode === AccessMode.disabled
         ) {
-            this.isDisabled$ = observablePerFormService.data.pipe(
-                map(data => {
-                    return this.evaluteAccessExpression(data!, this._options);
+            this.isDisabled$ = observablePerFormService.dataEvent.pipe(
+                map(dataEvent => {
+                    return this.evaluteAccessExpression(
+                        dataEvent!,
+                        this._options,
+                    );
                 }),
             );
         }
@@ -46,7 +50,7 @@ export class PerFormControlObs extends PerFormControlBase {
             this._options.accessMode !== undefined &&
             this._options.accessMode.mode === AccessMode.readonly
         ) {
-            this.isReadonly$ = observablePerFormService.data.pipe(
+            this.isReadonly$ = observablePerFormService.dataEvent.pipe(
                 map(data => {
                     return this._options.accessMode!.expression.bind(
                         data,
@@ -56,14 +60,14 @@ export class PerFormControlObs extends PerFormControlBase {
         }
 
         if (this._options.show !== undefined) {
-            this.show$ = observablePerFormService.data.pipe(
+            this.show$ = observablePerFormService.dataEvent.pipe(
                 map(data => {
                     return this.evaluteAccessExpression(data!, this._options);
                 }),
             );
         }
 
-        this.value$ = observablePerFormService.data.pipe(
+        this.value$ = observablePerFormService.dataEvent.pipe(
             map(data => {
                 if (data) {
                     return get(data, this._options.valueBinding);

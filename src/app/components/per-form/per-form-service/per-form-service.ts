@@ -1,11 +1,20 @@
 import { Signal } from "@angular/core";
 import { Observable } from "rxjs";
 
+export interface IDataChangeEmitter {
+    id: string;
+}
+
+export type DataChangeEventType = {
+    data: Record<string, unknown>;
+    emitter?: IDataChangeEmitter;
+};
+
 export type DataChangeType =
-    | Signal<Record<string, unknown> | undefined>
-    | Observable<Record<string, unknown> | undefined>;
+    | Signal<DataChangeEventType | undefined>
+    | Observable<DataChangeEventType | undefined>;
 
 export abstract class PerFormService<T> {
-    public abstract data: T;
-    public abstract dataChanged(data: Record<string, unknown>): void;
+    public abstract dataEvent: T;
+    public abstract updateData(data: DataChangeEventType): void;
 }

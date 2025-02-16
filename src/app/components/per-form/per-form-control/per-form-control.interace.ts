@@ -10,6 +10,8 @@ export enum AccessMode {
     disabled = "disabled",
 }
 
+export type ComponentId = string;
+
 export interface IAccessModePerformControl {
     expression: Function;
     // if set to true, it will be evaluated each time the data changes
@@ -25,4 +27,8 @@ export interface IPerFormControlOptions {
     valueBinding: string;
     show?: IShowPerformControl;
     accessMode?: IAccessModePerformControl;
+    // If present, the component will check if the emitter of the data change event
+    // is in the list of component ids and only then will it update it's computable
+    // properties. Such as show and accessmode
+    componentDependencies?: ComponentId[];
 }

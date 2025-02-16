@@ -48,7 +48,7 @@ export class PerFormControlSignal extends PerFormControlBase {
             options.accessMode.mode === AccessMode.disabled
         ) {
             this.isDisabled = computed(() => {
-                const data = this._signalPerFormService.data();
+                const data = this._signalPerFormService.dataEvent();
                 return this.evaluteAccessExpression(data!, options);
             });
         }
@@ -58,20 +58,20 @@ export class PerFormControlSignal extends PerFormControlBase {
             options.accessMode.mode === AccessMode.readonly
         ) {
             this.isReadonly = computed(() => {
-                const data = this._signalPerFormService.data();
+                const data = this._signalPerFormService.dataEvent();
                 return this.evaluteAccessExpression(data!, options);
             });
         }
 
         if (options.show !== undefined) {
             this.show = computed(() => {
-                const data = this._signalPerFormService.data();
+                const data = this._signalPerFormService.dataEvent();
                 return this.evaluteShowExpression(data!, options);
             });
         }
 
         this.value = computed(() => {
-            const data = this._signalPerFormService.data();
+            const data = this._signalPerFormService.dataEvent()?.data;
             if (data) {
                 return get(data, options.valueBinding);
             }
@@ -80,7 +80,7 @@ export class PerFormControlSignal extends PerFormControlBase {
     }
 
     public override setValue(value: any) {
-        const data = this._signalPerFormService.data();
+        const data = this._signalPerFormService.dataEvent()?.data;
         super.setValue(
             value,
             this.formControl,
