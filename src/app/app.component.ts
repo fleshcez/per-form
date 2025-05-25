@@ -10,7 +10,9 @@ import { PerFormControlBase } from "./components/per-form/per-form-control/per-f
 import { PerFormControlSignal } from "./components/per-form/per-form-control/per-form-control-signal";
 import {
     AccessMode,
+    IDependencyBasedUpdateStrategy,
     IPerFormControlOptions,
+    UpdateStrategyType,
 } from "./components/per-form/per-form-control/per-form-control.interace";
 
 @Component({
@@ -23,13 +25,13 @@ import {
             provide: PerFormService<DataChangeType>,
             useClass: SignalPerFormService,
         },
-        {
-            provide: PerFormControlSignal,
-            // useFactory: (perFormService: PerFormService<DataChangeType>) => {
-            //     return new PerFormControlSignal(perFormService);
-            // },
-            // deps: [PerFormService],
-        },
+        // {
+        //     provide: PerFormControlSignal,
+        // useFactory: (perFormService: PerFormService<DataChangeType>) => {
+        //     return new PerFormControlSignal(perFormService);
+        // },
+        // deps: [PerFormService],
+        // },
     ],
 })
 export class AppComponent {
@@ -58,15 +60,33 @@ export class AppComponent {
         },
         accessMode: {
             mode: AccessMode.readonly,
-            isDynamic: true,
+            // isDynamic: true,
+            updateStrategy: {
+                type: UpdateStrategyType.dynamic,
+            },
             expression: function (this: Record<string, unknown>) {
                 return this["isReadonly"];
             },
         },
     };
 
+    public textDependentControlOptions: IPerFormControlOptions = {
+        id: "client.dependentName",
+        valueBinding: "client.dependentName",
+        accessMode: {
+            mode: AccessMode.readonly,
+            updateStrategy: {
+                type: UpdateStrategyType.dependencyBased,
+                dependencies: ["client.name"],
+            } as IDependencyBasedUpdateStrategy,
+            expression: function (this: Record<string, unknown>) {
+                return this["isReadonly2"];
+            },
+        },
+    };
+
     public checkboxDisabledControlOptions: IPerFormControlOptions = {
-        id: "isReadonly",
-        valueBinding: "isReadonly",
+        id: "isReadonly2",
+        valueBinding: "isReadonly2",
     };
 }

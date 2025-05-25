@@ -5,7 +5,11 @@ import {
     DataChangeType,
     PerFormService,
 } from "../per-form-service/per-form-service";
-import { IPerFormControlOptions } from "./per-form-control.interace";
+import {
+    IDependencyBasedUpdateStrategy,
+    IPerFormControlOptions,
+    UpdateStrategyType,
+} from "./per-form-control.interace";
 
 export class PerFormControlBase {
     protected cachedShow: boolean | undefined = undefined;
@@ -31,15 +35,48 @@ export class PerFormControlBase {
         options: IPerFormControlOptions,
     ) {
         const data = dataEvent.data;
-        if (!options.accessMode?.isDynamic) {
-            if (this.cachedAccessMode === undefined) {
-                this.cachedAccessMode =
-                    options.accessMode!.expression.bind(data)();
+
+        const strategy = options.accessMode?.updateStrategy?.type;
+        switch (strategy) {
+            case UpdateStrategyType.static: {
+                if (this.cachedAccessMode === undefined) {
+                    this.cachedAccessMode =
+                        options.accessMode!.expression.bind(data)();
+                }
+                return this.cachedAccessMode;
             }
+            case UpdateStrategyType.dependencyBased: {
+                const restult = this._evaluteDependencyBasedAccessExpression(
+                    dataEvent,
+                    options,
+                );
+                return this.cachedAccessMode;
+            }
+            case UpdateStrategyType.dynamic:
+            default: {
+                return options.accessMode!.expression.bind(data)();
+            }
+        }
+    }
+
+    // Evaluate accessmode only one of the components of interest changes data
+    private _evaluteDependencyBasedAccessExpression(
+        dataEvent: DataChangeEventType,
+        options: IPerFormControlOptions,
+    ) {
+        const emitterId = dataEvent.emitter?.id;
+        if (!emitterId) {
             return this.cachedAccessMode;
         }
 
-        return options.accessMode.expression.bind(data)();
+        const strategy = options.accessMode
+            ?.updateStrategy as IDependencyBasedUpdateStrategy;
+        if (strategy.dependencies.includes(emitterId)) {
+            this.cachedAccessMode = options.accessMode!.expression.bind(
+                dataEvent.data,
+            )();
+        }
+        return this.cachedAccessMode;
     }
 
     public setValue(

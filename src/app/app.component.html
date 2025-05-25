@@ -4,13 +4,19 @@
             <per-form-checkbox
                 [label]="'Show text'"
                 [options]="checkboxControlOptions"
-            >
-            </per-form-checkbox>
+            ></per-form-checkbox>
+
             <per-form-text [options]="textControlOptions"></per-form-text>
+
             <per-form-checkbox
                 [label]="'Disable text'"
                 [options]="checkboxDisabledControlOptions"
             ></per-form-checkbox>
+
+            <per-form-text
+                label="aa"
+                [options]="textDependentControlOptions"
+            ></per-form-text>
         </ng-container>
     </per-form>
 </div>

@@ -5,11 +5,13 @@ import {
     DataChangeType,
     PerFormService,
 } from "../../per-form-service/per-form-service";
+import { PerFormControlSignalFactory } from "../../per-form.component";
 
 @Component({
     selector: "per-form-checkbox",
     templateUrl: "./per-form-checkbox.component.html",
     styleUrls: ["./per-form-checkbox.component.scss"],
+    providers: [PerFormControlSignalFactory],
     standalone: false,
 })
 export class PerFormCheckbox {
@@ -17,11 +19,17 @@ export class PerFormCheckbox {
     public label: string | undefined;
     @Input()
     public options!: IPerFormControlOptions;
-    @Input()
-    public control: PerFormControlSignal;
+    // @Input()
+    // public control: PerFormControlSignal;
 
-    public constructor(perFormService: PerFormService<DataChangeType>) {
-        this.control = new PerFormControlSignal(perFormService);
+    // public constructor(perFormService: PerFormService<DataChangeType>) {
+    //     this.control = new PerFormControlSignal(perFormService);
+    // }
+    constructor(
+        // perFormService: PerFormService<Signal<DataChangeEventType | undefined>>,
+        public control: PerFormControlSignal,
+    ) {
+        // this.control = new PerFormControlSignal(perFormService);
     }
 
     public ngOnChanges() {
