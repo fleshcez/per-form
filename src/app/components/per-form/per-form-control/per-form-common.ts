@@ -59,7 +59,7 @@ export class PerFormControlBase {
         }
     }
 
-    // Evaluate accessmode only one of the components of interest changes data
+    // Evaluate accessmode only when one of the components of interest changes data
     private _evaluteDependencyBasedAccessExpression(
         dataEvent: DataChangeEventType,
         options: IPerFormControlOptions,

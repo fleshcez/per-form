@@ -4,18 +4,28 @@
             <per-form-checkbox
                 [label]="'Show text'"
                 [options]="checkboxControlOptions"
+                perFormControlSignal
+                [perFormControlSignal.options]="checkboxControlOptions"
             ></per-form-checkbox>
 
-            <per-form-text [options]="textControlOptions"></per-form-text>
+            <per-form-text
+                [options]="textControlOptions"
+                perFormControlSignal
+                [perFormControlSignal.options]="textControlOptions"
+            ></per-form-text>
 
             <per-form-checkbox
                 [label]="'Disable text'"
                 [options]="checkboxDisabledControlOptions"
+                perFormControlSignal
+                [perFormControlSignal.options]="checkboxDisabledControlOptions"
             ></per-form-checkbox>
 
             <per-form-text
                 label="aa"
                 [options]="textDependentControlOptions"
+                perFormControlSignal
+                [perFormControlSignal.options]="textDependentControlOptions"
             ></per-form-text>
         </ng-container>
     </per-form>

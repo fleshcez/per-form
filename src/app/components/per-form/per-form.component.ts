@@ -11,14 +11,7 @@ import {
     DataChangeType,
     PerFormService,
 } from "./per-form-service/per-form-service";
-import { PerFormControlSignal } from "./per-form-control/per-form-control-signal";
-export const PerFormControlSignalFactory = {
-    provide: PerFormControlSignal,
-    useFactory: (perFormService: PerFormService<DataChangeType>) => {
-        return new PerFormControlSignal(perFormService);
-    },
-    deps: [[PerFormService<DataChangeType>]],
-};
+
 @Component({
     selector: "per-form",
     templateUrl: "./per-form.component.html",
