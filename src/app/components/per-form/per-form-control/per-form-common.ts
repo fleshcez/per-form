@@ -8,6 +8,7 @@ import {
 import {
     IDependencyBasedUpdateStrategy,
     IPerFormControlOptions,
+    IPerFormControlOptionsBase,
     UpdateStrategyType,
 } from "./per-form-control.interace";
 
@@ -32,7 +33,7 @@ export class PerFormControlBase {
 
     public evaluteAccessExpression(
         dataEvent: DataChangeEventType,
-        options: IPerFormControlOptions,
+        options: IPerFormControlOptionsBase,
     ) {
         const data = dataEvent.data;
 
@@ -62,7 +63,7 @@ export class PerFormControlBase {
     // Evaluate accessmode only when one of the components of interest changes data
     private _evaluteDependencyBasedAccessExpression(
         dataEvent: DataChangeEventType,
-        options: IPerFormControlOptions,
+        options: IPerFormControlOptionsBase,
     ) {
         const emitterId = dataEvent.emitter?.id;
         if (!emitterId) {

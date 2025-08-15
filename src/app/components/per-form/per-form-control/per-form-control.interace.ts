@@ -50,11 +50,16 @@ export interface IDependencyBasedUpdateStrategy extends IUpdateStrategy {
     dependencies: ComponentId[];
 }
 
-export interface IPerFormControlOptions {
+export interface IPerFormControlOptions extends IPerFormControlOptionsBase {
     // can be the same as the binding, but must be unique
     id: string;
     // property on form model where value is stored and retrieved from
     valueBinding: string;
+}
+
+export interface IPerformGroupOptions extends IPerFormControlOptionsBase {}
+
+export interface IPerFormControlOptionsBase {
     show?: IShowPerformControl;
     accessMode?: IAccessModePerformControl;
 }

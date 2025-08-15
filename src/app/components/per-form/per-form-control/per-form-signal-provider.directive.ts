@@ -1,18 +1,37 @@
-import { Directive, Input, SimpleChanges } from "@angular/core";
+import {
+    Directive,
+    Input,
+    SimpleChanges,
+    Optional,
+    SkipSelf,
+} from "@angular/core";
 import {
     PerFormService,
     DataChangeType,
 } from "../per-form-service/per-form-service";
 import { PerFormControlSignal } from "./per-form-control-signal";
-import { IPerFormControlOptions } from "./per-form-control.interace";
+import {
+    IPerFormControlOptions,
+    IPerFormControlOptionsBase,
+} from "./per-form-control.interace";
+import {
+    ParentFormControlToken,
+    IParentFormControl,
+} from "../per-form-row/per-form-row";
 
 export const PerFormControlSignalFactory = {
     provide: PerFormControlSignal,
-    useFactory: (perFormService: PerFormService<DataChangeType>) => {
-        const control = new PerFormControlSignal(perFormService);
+    useFactory: (
+        perFormService: PerFormService<DataChangeType>,
+        parent: IParentFormControl,
+    ) => {
+        const control = new PerFormControlSignal(perFormService, parent);
         return control;
     },
-    deps: [[PerFormService<DataChangeType>]],
+    deps: [
+        [PerFormService<DataChangeType>],
+        [new Optional(), new SkipSelf(), ParentFormControlToken],
+    ],
 };
 
 @Directive({
@@ -21,7 +40,7 @@ export const PerFormControlSignalFactory = {
     providers: [PerFormControlSignalFactory],
 })
 export class PerFormControlSignalProvider {
-    @Input("perFormControlSignal.options") options!: IPerFormControlOptions;
+    @Input("perFormControlSignal.options") options!: IPerFormControlOptionsBase;
 
     constructor(private _perFormControlSignal: PerFormControlSignal) {}
 

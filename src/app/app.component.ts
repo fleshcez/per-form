@@ -11,7 +11,9 @@ import { PerFormControlSignal } from "./components/per-form/per-form-control/per
 import {
     AccessMode,
     IDependencyBasedUpdateStrategy,
+    IDynamicUpdateStrategy,
     IPerFormControlOptions,
+    IPerformGroupOptions,
     UpdateStrategyType,
 } from "./components/per-form/per-form-control/per-form-control.interace";
 
@@ -88,5 +90,56 @@ export class AppComponent {
     public checkboxDisabledControlOptions: IPerFormControlOptions = {
         id: "isReadonly2",
         valueBinding: "isReadonly2",
+    };
+
+    // ----
+    public checkboxReadonlyRow2Text: IPerFormControlOptions = {
+        id: "checkboxReadonlyRow2Text",
+        valueBinding: "isRow2TextReadonly",
+    };
+
+    // row2
+    public row2GroupOptions: IPerformGroupOptions = {
+        accessMode: {
+            mode: AccessMode.disabled,
+            updateStrategy: {
+                type: UpdateStrategyType.dynamic,
+            } as IDynamicUpdateStrategy,
+            expression: function (this: Record<string, unknown>) {
+                return this["disableEntireRow2"];
+            },
+        },
+    };
+
+    public disableRow2ChecbkoxOptions: IPerFormControlOptions = {
+        id: "disableEntireRow2Checbkox",
+        valueBinding: "disableEntireRow2",
+    };
+
+    public row2Text1ControlOptions: IPerFormControlOptions = {
+        id: "row2Text1",
+        valueBinding: "client.row2Text1",
+        accessMode: {
+            mode: AccessMode.readonly,
+            updateStrategy: {
+                type: UpdateStrategyType.dynamic,
+            } as IDynamicUpdateStrategy,
+            expression: function (this: Record<string, unknown>) {
+                return this["isRow2TextReadonly"];
+            },
+        },
+    };
+    public row2Text2ControlOptions: IPerFormControlOptions = {
+        id: "row2Text2",
+        valueBinding: "client.row2Text2",
+        // accessMode: {
+        //     mode: AccessMode.disabled,
+        //     updateStrategy: {
+        //         type: UpdateStrategyType.dynamic,
+        //     } as IDynamicUpdateStrategy,
+        //     expression: function (this: Record<string, unknown>) {
+        //         return this["isRow2TextReadonly"];
+        //     },
+        // },
     };
 }

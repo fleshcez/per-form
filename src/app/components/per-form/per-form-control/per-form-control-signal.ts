@@ -2,13 +2,17 @@ import { FormControl } from "@angular/forms";
 import { SignalPerFormService } from "../per-form-service/signal-per-form-service";
 import {
     computed,
-    inject,
     Injectable,
-    Injector,
     signal,
     Signal,
+    Inject,
+    Optional,
 } from "@angular/core";
 import { get } from "lodash";
+import {
+    ParentFormControlToken,
+    IParentFormControl,
+} from "../per-form-row/per-form-row";
 import {
     DataChangeType,
     PerFormService,
@@ -30,7 +34,12 @@ export class PerFormControlSignal extends PerFormControlBase {
     private _options!: IPerFormControlOptions;
     public formControl: FormControl;
 
-    constructor(perFormService: PerFormService<DataChangeType>) {
+    constructor(
+        perFormService: PerFormService<DataChangeType>,
+        @Inject(ParentFormControlToken)
+        @Optional()
+        private _parentFormControl: IParentFormControl,
+    ) {
         super();
         this.formControl = new FormControl();
         if (perFormService instanceof SignalPerFormService === false) {
@@ -43,6 +52,12 @@ export class PerFormControlSignal extends PerFormControlBase {
 
     public setup(options: IPerFormControlOptions) {
         this._options = options;
+
+        // try to inherit accessMode from parent
+        if (!options.accessMode) {
+            this._inheritAccessMode();
+        }
+
         if (
             options.accessMode !== undefined &&
             options.accessMode.mode === AccessMode.disabled
@@ -77,6 +92,15 @@ export class PerFormControlSignal extends PerFormControlBase {
             }
             return undefined;
         });
+        this._parentFormControl?.registerChild(this);
+    }
+
+    private _inheritAccessMode(): void {
+        if (!this._parentFormControl?.control) {
+            return;
+        }
+        this.isDisabled = this._parentFormControl.control.isDisabled;
+        this.isReadonly = this._parentFormControl.control.isReadonly;
     }
 
     public override setValue(value: any) {
@@ -88,5 +112,13 @@ export class PerFormControlSignal extends PerFormControlBase {
             this._options,
             this._signalPerFormService,
         );
+    }
+
+    public getOptions(): IPerFormControlOptions {
+        return { ...this._options };
+    }
+
+    public ngOnDestroy(): void {
+        this._parentFormControl?.unregisterChild(this._options.id);
     }
 }
