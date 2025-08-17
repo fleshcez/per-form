@@ -1,24 +1,29 @@
 <div>
-    <per-form [data]="data">
+    <per-form
+        [data]="data"
+        [options]="entireFormControlOptions"
+        perFormControlSignal="perFormControlSignal"
+        [perFormControlSignal.options]="entireFormControlOptions"
+    >
         <ng-container slot="projected">
             <per-form-row>
                 <per-form-checkbox
                     [label]="'Show text'"
                     [options]="checkboxControlOptions"
-                    perFormControlSignal
+                    perFormControlSignal="perFormControlSignal"
                     [perFormControlSignal.options]="checkboxControlOptions"
                 ></per-form-checkbox>
 
                 <per-form-text
                     [options]="textControlOptions"
-                    perFormControlSignal
+                    perFormControlSignal="perFormControlSignal"
                     [perFormControlSignal.options]="textControlOptions"
                 ></per-form-text>
 
                 <per-form-checkbox
                     [label]="'Disable text'"
                     [options]="checkboxDisabledControlOptions"
-                    perFormControlSignal
+                    perFormControlSignal="perFormControlSignal"
                     [perFormControlSignal.options]="
                         checkboxDisabledControlOptions
                     "
@@ -27,44 +32,43 @@
                 <per-form-text
                     label="aa"
                     [options]="textDependentControlOptions"
-                    perFormControlSignal
+                    perFormControlSignal="perFormControlSignal"
                     [perFormControlSignal.options]="textDependentControlOptions"
                 ></per-form-text>
 
                 <per-form-checkbox
                     [label]="'Readonly row2 text'"
                     [options]="checkboxReadonlyRow2Text"
-                    perFormControlSignal
+                    perFormControlSignal="perFormControlSignal"
                     [perFormControlSignal.options]="checkboxReadonlyRow2Text"
                 ></per-form-checkbox>
             </per-form-row>
+
             <per-form-row
                 [options]="row2GroupOptions"
-                perFormControlSignal
+                perFormControlSignal="perFormControlSignal"
                 [perFormControlSignal.options]="row2GroupOptions"
             >
                 <per-form-text
                     label="row2 text1"
                     [options]="row2Text1ControlOptions"
-                    perFormControlSignal
+                    perFormControlSignal="perFormControlSignal"
                     [perFormControlSignal.options]="row2Text1ControlOptions"
                 ></per-form-text>
+
                 <per-form-text
                     label="row2 text2"
                     [options]="row2Text2ControlOptions"
-                    perFormControlSignal
+                    perFormControlSignal="perFormControlSignal"
                     [perFormControlSignal.options]="row2Text2ControlOptions"
                 ></per-form-text>
             </per-form-row>
-            <per-form-row
-                [options]="{}"
-                perFormControlSignal
-                [perFormControlSignal.options]="{}"
-            >
+
+            <per-form-row>
                 <per-form-checkbox
                     [label]="'Disable entire row2'"
                     [options]="disableRow2ChecbkoxOptions"
-                    perFormControlSignal
+                    perFormControlSignal="perFormControlSignal"
                     [perFormControlSignal.options]="disableRow2ChecbkoxOptions"
                 ></per-form-checkbox>
             </per-form-row>

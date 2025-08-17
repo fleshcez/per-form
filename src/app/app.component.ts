@@ -44,6 +44,22 @@ export class AppComponent {
         client: {
             name: "John Doe",
         },
+        isEntireFormDisabled: true,
+    };
+
+    // Top level form disabled
+    public entireFormControlOptions: IPerFormControlOptions = {
+        id: "entireForm",
+        valueBinding: "",
+        accessMode: {
+            mode: AccessMode.disabled,
+            updateStrategy: {
+                type: UpdateStrategyType.dynamic,
+            } as IDynamicUpdateStrategy,
+            expression: function (this: Record<string, unknown>) {
+                return this["isEntireFormDisabled"];
+            },
+        },
     };
 
     public checkboxControlOptions: IPerFormControlOptions = {
@@ -100,6 +116,7 @@ export class AppComponent {
 
     // row2
     public row2GroupOptions: IPerformGroupOptions = {
+        // remove this to let parent form dicate disabled state
         accessMode: {
             mode: AccessMode.disabled,
             updateStrategy: {

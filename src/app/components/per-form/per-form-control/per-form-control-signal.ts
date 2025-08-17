@@ -10,10 +10,6 @@ import {
 } from "@angular/core";
 import { get } from "lodash";
 import {
-    ParentFormControlToken,
-    IParentFormControl,
-} from "../per-form-row/per-form-row";
-import {
     DataChangeType,
     PerFormService,
 } from "../per-form-service/per-form-service";
@@ -22,6 +18,10 @@ import {
     AccessMode,
     IPerFormControlOptions,
 } from "./per-form-control.interace";
+import {
+    ParentFormControlToken,
+    IParentFormControl,
+} from "../per-form-group/per-form-group";
 
 @Injectable()
 export class PerFormControlSignal extends PerFormControlBase {

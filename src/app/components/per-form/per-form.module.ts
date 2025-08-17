@@ -6,6 +6,7 @@ import { PerFormCheckbox } from "./per-form-control/per-form-checkbox/per-form-c
 import { Test } from "./per-form-control/test.component/test.component";
 import { PerFormControlSignalProvider } from "./per-form-control/per-form-signal-provider.directive";
 import { PerFormRow } from "./per-form-row/per-form-row";
+import { PerFormGroup } from "./per-form-group/per-form-group";
 
 @NgModule({
     declarations: [

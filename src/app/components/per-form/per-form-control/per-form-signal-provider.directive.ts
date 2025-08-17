@@ -15,9 +15,9 @@ import {
     IPerFormControlOptionsBase,
 } from "./per-form-control.interace";
 import {
-    ParentFormControlToken,
     IParentFormControl,
-} from "../per-form-row/per-form-row";
+    ParentFormControlToken,
+} from "../per-form-group/per-form-group";
 
 export const PerFormControlSignalFactory = {
     provide: PerFormControlSignal,
